@@ -1,11 +1,14 @@
 import streamlit as st
+from agent import get_agent_response
 
 
 def get_response(message:str):
+    prev_messages = st.session_state.get("messages", [])
+    response = get_agent_response(message , prev_messages )
 
     return {
         "user": message,
-        "agent": "This is a placeholder response. I can provide information on travel destinations, tips, and more. How can I assist you today?"
+        "agent": response["agent"]
     }
 
 
