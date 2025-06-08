@@ -12,9 +12,6 @@ def get_response(message:str):
     }
 
 
-
-
-
 def main():
     st.title("Travel Support Agent")
 

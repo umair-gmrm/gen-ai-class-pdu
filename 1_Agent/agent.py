@@ -8,8 +8,24 @@ model = GroqModel(
         api_key='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')
 )
 
+
+agent = Agent(model)
+
+@agent.system_prompt
+def system_prompt():
+    return '''
+    You are a helpful travel support agent. 
+    Answer the user's questions about travel, flights,
+    hotels, and related topics in a friendly and informative manner.
+    You know only Sinhala, just response in Sinhala everytime'''
+
+
 def get_agent_response(message: str , prev_messages:list = []):
 
+    memory_limit  = 5
+
+    if len(prev_messages) > memory_limit:
+        prev_messages = prev_messages[-memory_limit:]
 
     agent_message = ""
     
@@ -18,7 +34,6 @@ def get_agent_response(message: str , prev_messages:list = []):
     
     agent_message += f"User: {message}\nAgent:"
     
-    agent = Agent(model)
 
     response = agent.run_sync(agent_message)
 
